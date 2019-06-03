@@ -1,0 +1,47 @@
+{
+    "nodes": [
+        {
+            "id": 0,
+            "name": "plant"
+        },
+        {
+            "id": 1,
+            "name": "urchin"
+        },
+        {
+            "id": 2,
+            "name": "abalone"
+        },
+        {
+            "id": 3,
+            "name": "otter"
+        }
+    ],
+    "links": [
+        {
+            "src": 0,
+            "dst": 1,
+            "count": 2
+        },
+        {
+            "src": 0,
+            "dst": 2,
+            "count": 1
+        },
+        {
+            "src": 0,
+            "dst": 3,
+            "count": 1
+        },
+        {
+            "src": 1,
+            "dst": 3,
+            "count": 1
+        },
+        {
+            "src": 2,
+            "dst": 3,
+            "count": 1
+        }
+    ]
+}
