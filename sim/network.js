@@ -28,10 +28,15 @@ function autoCalcXY(graph, w, h) {
         a = svg_h;
         b = svg_w;
     }
-    let x_tmp = d3.scalePow()
-        .exponent(2/3)
-        .domain([0, maxlvl])
-        .range([0.15 * a, .85 * a]);
+    let x_tmp;
+    if (maxlvl == 0) {
+        x_tmp = (lvl) => a/2;
+    } else {
+        x_tmp = d3.scalePow()
+            .exponent(2 / 3)
+            .domain([0, maxlvl])
+            .range([0.15 * a, .85 * a]);
+    }
     for (let [nodeid, node] of graph.nodes) {
         x.set(nodeid, x_tmp(node.lvl));
         node_lvlidx = lvlidx.get(nodeid);
@@ -55,9 +60,9 @@ function layout(graph) {
         .attr('width', '100%')
         .attr('height', '400px');
     svg.append('g')
-        .attr('id', 'nodes');
-    svg.append('g')
         .attr('id', 'links');
+    svg.append('g')
+        .attr('id', 'nodes');
     svg.append('g')
         .attr('id', 'names');
     let dims = svg.node().getBoundingClientRect();
@@ -161,26 +166,15 @@ function render(graph, positions) {
     ncap = d3.selectAll('#nodes > g > circle.cap')
         .data(nodes)
         .transition()
-        .attr('r', (d, i) => 6 * Math.sqrt(d.cap) / (maxlvl))
+        .attr('r', (d, i) => 8 * Math.sqrt(d.cap) / (maxlvl+1))
         .attr('fill', 'transparent')
         .attr('stroke', 'darkred')
         .attr('stroke-width', 5);
     npop = d3.selectAll('#nodes > g > circle.pop')
         .data(nodes)
         .transition()
-        .attr('r', (d, i) => 6 * Math.sqrt(d.cap) / (maxlvl) * (d.pop / d.cap))
+        .attr('r', (d, i) => 8 * Math.sqrt(d.cap) / (maxlvl+1) * (d.pop / d.cap))
         .attr('fill', 'darkred');
-    let getLine = function(d) {
-        r = 4 * Math.sqrt(d.cap) / (maxlvl) * (d.pop / d.cap);
-        k = 0.8;
-        if (Math.abs(d.pop - d.cap/2) < 10) {
-            return [0,0,0,0]
-        } else if (d.pop > d.cap/2) {
-            return [0, -k*r, 0, k*r];
-        } else {
-            return [0, k*r, 0, -k*r]
-        }
-    }
     nclick = d3.selectAll('#nodes > g > circle.click')
         .data(nodes)
         .on('click', (d) => {
@@ -189,7 +183,7 @@ function render(graph, positions) {
             render(graph, positions);
         })
         .transition()
-        .attr('r', (d, i) => 6 * Math.sqrt(d.cap) / (maxlvl) + 20)
+        .attr('r', (d, i) => 8 * Math.sqrt(d.cap) / (maxlvl+1) + 20)
 
     let links = graph.links;
     let lSelect = d3.select('#links')
@@ -331,12 +325,17 @@ d3.select('#reset-btn').on('click', () => {
         playing = false;
         d3.select('#play-btn').text("play");
     }
-    let svgNode = d3.select('#diag').node();
+    let svgNode = d3.select('svg').node();
+    let toRemove = [];
     for (let child of svgNode.children) {
         if (child.id != "filter_defs") {
-            svgNode.removeChild(child);
+            toRemove.push(child);
         }
     }
+    console.log(toRemove);
+    toRemove.forEach((child) => {
+        svgNode.removeChild(child);
+    });
     init();
 })
 

@@ -2,19 +2,10 @@
     "nodes": [
         {
             "id": 0,
-            "name": "plant"
-        },
-        {
-            "id": 1,
-            "name": "urchin"
-        }    
+            "name": "abalone"
+        }
     ],
     "links": [
-        {
-            "src": 0,
-            "dst": 1,
-            "count": 2
-        }
     ],
     "params": {
         "udWeights": [
