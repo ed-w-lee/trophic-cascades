@@ -8,15 +8,30 @@
     <link rel="stylesheet" type="text/css" href="sim.css">
     <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
+
 <body>
-    <div id="graph-text">
-    </div>
-    <button id="tick-btn">tick</button>
-    <button id="perturb-btn">perturb</button>
-    <button id="extinct-btn">exterminate</button>
-    <svg viewBox="0 0 600 600"></svg>
-    <script src="model.js"></script>
-    <script src="network.js"></script>
+    <div id="demo">
+        <!-- <div id="graph-text"></div> -->
+        <button id="play-btn">play</button>
+        <button id="reset-btn">reset</button>
+        <button id="perturb-btn">perturb</button>
+        <button id="extinct-btn">exterminate</button>
+        <div id="svg-hold">
+            <svg id="diag" viewBox="0 0 600 600">
+                <defs id="filter_defs">
+                    <filter id="f4" x="0" y="0" width="300%" height="300%">
+                        <feOffset result="offOut" in="SourceGraphic" dx="0" dy="0" />
+                        <feColorMatrix result="matrixOut" in="offOut" type="matrix"
+                            values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0" />
+                        <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
+                        <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+                    </filter>
+                </defs>
+            </svg>
+        </div>
+
+        <script src="model.js"></script>
+        <script src="network.js"></script>
 </body>
 
 </html>

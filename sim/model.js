@@ -1,13 +1,14 @@
 class Graph {
-    constructor(nodes, links, mult=0.5, prog=10, pert=10) {
+    constructor(nodes, links, mult=0.5, prog=10, pert=10, pnWeights=[1.0,1.0], udWeights=[0.6,0.6]) {
+        console.log(mult, pert, prog, pnWeights, udWeights);
         this.mult = mult; // trophic efficiency
         this.prog = prog; // progress of mass movements
         this.pert = -pert; // initial perturbation amount
         this.nodes = new Map(nodes.map((x) => [x.id, x]));
         this.links = links;
         this.isSetup = false;
-        this.posnegWeights = [1.0, 1.0]; // [pos, neg]
-        this.updownWeights = [1.0, 1.0]; // [up, down]
+        this.posnegWeights = pnWeights; // [pos, neg]
+        this.updownWeights = udWeights; // [up, down]
     }
 
     addNode(node) {
@@ -178,14 +179,14 @@ class Graph {
             // convert proportional populations to actual populations
             for (let node of this.nodes.values()) {
                 node.pop = Math.round(100 * node.pop / minpop); 
-                node.cap = node.pop * 2;
+                node.cap = node.pop * 3;
             }
         }
     }
 
     // setExtinct - species can go extinct without explicit user input
     // ignoreExtinct - species can't increase pop if extinct
-    changePop(nodeid, diff, setExtinct=false, ignoreExtinct=true) {
+    changePop(nodeid, diff, setExtinct=true, ignoreExtinct=true) {
         let node = this.nodes.get(nodeid)
         if (ignoreExtinct && node.isExtinct) {
             return 0;
@@ -200,7 +201,7 @@ class Graph {
 
     // perturb node by decreasing population by amount
     // ignoreExtinct should be true EXCEPT FOR DIRECT USER INPUTS
-    perturb(nodeid, pert, setExtinct=false, ignoreExtinct=true) {
+    perturb(nodeid, pert, setExtinct=true, ignoreExtinct=true) {
         if (!pert) {
             pert = this.pert;
         }
@@ -355,6 +356,10 @@ function generateGraphFromObj(obj) {
      *    - dst
      *    - count
      *    ]
+     *  - params
+     *    - pnWeights
+     *    - udWeights
+     *    - mult
      * }
      **/
 
@@ -366,9 +371,18 @@ function generateGraphFromObj(obj) {
     for (l of obj.links) {
         links.push(new Link(l.src, l.dst, l.count))
     }
-    mult = 0.5
-    if (obj.mult) {
-        mult = obj.mult;
+    let mult = undefined,
+        prog = undefined,
+        pert = undefined,
+        pnWeights = undefined,
+        udWeights = undefined;
+    if (obj.params) {
+        mult = obj.params.mult ? obj.params.mult : mult;
+        prog = obj.params.prog ? obj.params.prog : prog;
+        pert = obj.params.pert ? obj.params.pert : pert;
+        pnWeights = obj.params.pnWeights ? obj.params.pnWeights : pnWeights;
+        udWeights = obj.params.udWeights ? obj.params.udWeights : udWeights;
     }
-    return new Graph(nodes, links, mult);
+
+    return new Graph(nodes, links, mult, prog, pert, pnWeights, udWeights);
 }

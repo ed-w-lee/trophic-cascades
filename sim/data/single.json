@@ -1,0 +1,24 @@
+{
+    "nodes": [
+        {
+            "id": 0,
+            "name": "plant"
+        },
+        {
+            "id": 1,
+            "name": "urchin"
+        }    
+    ],
+    "links": [
+        {
+            "src": 0,
+            "dst": 1,
+            "count": 2
+        }
+    ],
+    "params": {
+        "udWeights": [
+            1.0, 1.0
+        ]
+    }
+}

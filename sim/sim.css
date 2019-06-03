@@ -1,0 +1,17 @@
+#links > circle {
+    fill: "red";
+}
+#links > circle .pos {
+    fill: "green";
+}
+text.node_name {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+}
+circle.click {
+    fill-opacity: 0.0;
+}
+circle.click:hover {
+    fill-opacity: 0.3;
+}

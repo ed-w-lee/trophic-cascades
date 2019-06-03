@@ -13,16 +13,8 @@
             "name": "abalone"
         },
         {
-            "id": 5,
-            "name": "limpet"
-        },
-        {
             "id": 3,
             "name": "otter"
-        },
-        {
-            "id": 6,
-            "name": "sea star"
         },
         {
             "id": 4,
@@ -37,22 +29,7 @@
         },
         {
             "src": 0,
-            "dst": 5,
-            "count": 1
-        },
-        {
-            "src": 0,
             "dst": 2,
-            "count": 2
-        },
-        {
-            "src": 1,
-            "dst": 6,
-            "count": 1
-        },
-        {
-            "src": 2,
-            "dst": 6,
             "count": 1
         },
         {
