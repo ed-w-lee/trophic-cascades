@@ -1,6 +1,5 @@
 class Graph {
     constructor(nodes, links, mult=0.5, prog=10, pert=10, pnWeights=[1.0,1.0], udWeights=[0.6,0.6]) {
-        console.log(mult, pert, prog, pnWeights, udWeights);
         this.mult = mult; // trophic efficiency
         this.prog = prog; // progress of mass movements
         this.pert = -pert; // initial perturbation amount
@@ -188,11 +187,25 @@ class Graph {
     // ignoreExtinct - species can't increase pop if extinct
     changePop(nodeid, diff, setExtinct=true, ignoreExtinct=true) {
         let node = this.nodes.get(nodeid)
-        if (ignoreExtinct && node.isExtinct) {
-            return 0;
+        let [inlinks, outlinks] = this.getLinks(nodeid);
+        if (ignoreExtinct) {
+            if (node.isExtinct) {
+                return 0;
+            } else {
+                let allExtinct = true;
+                for (let inlink of inlinks) {
+                    if (!this.nodes.get(inlink.src).isExtinct) {
+                        allExtinct = false;
+                        break;
+                    }
+                }
+                if (inlinks.length > 0 && allExtinct) {
+                    diff = -node.pop;
+                }
+            }
         }
-        let origpop = node.pop
-        let cap = node.cap
+        let origpop = node.pop;
+        let cap = node.cap;
         let newpop = Math.min(Math.max(0, Math.round(origpop + diff)), cap);
         this.nodes.get(nodeid).pop = newpop;
         this.nodes.get(nodeid).isExtinct = setExtinct && (newpop == 0);
@@ -210,8 +223,8 @@ class Graph {
             return;
         }
         // send `diff` split along all edges
-        let [inlinks, outlinks] = this.getLinks(nodeid);
         let totInWeight = 0;
+        let [inlinks, outlinks] = this.getLinks(nodeid);
         for (let inlink of inlinks) {
             if (ignoreExtinct && this.nodes.get(inlink.src).isExtinct) continue;
             totInWeight += inlink.count * inlink.weight;

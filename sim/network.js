@@ -1,13 +1,3 @@
-// let root = d3.select("svg");
-
-// let x = 100,
-//     y = 100,
-//     r = 20;
-// root.append('circle')
-//     .attr('cx', x)
-//     .attr('cy', y)
-//     .attr('r', r)
-
 var svg_w = 600;
 var svg_h = 600;
 var playing = false;
@@ -299,8 +289,6 @@ function render(graph, positions) {
         })
         .text((d) => {
             let ind;
-            console.log('HELLO');
-            console.log(d.pop, d.cap);
             if (Math.abs(d.pop - d.cap/2) < 3) {
                 ind = "";
             } else if (d.pop > d.cap/2) {
@@ -316,11 +304,9 @@ function render(graph, positions) {
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-    console.log(name);
     var regexS = "[\\?&]" + name + "=([^&#]*)";
     var regex = new RegExp(regexS);
     var results = regex.exec(window.location.href);
-    console.log(results);
     if (results == null)
         return "";
     else
@@ -330,7 +316,6 @@ function getParameterByName(name) {
 function init() {
     let MODE = getParameterByName("mode");
     let graphobj = 'data/' + MODE + '.json';
-    console.log(graphobj);
     d3.json(graphobj, function (err, graph) {
         if (err) throw err;
         g = generateGraphFromObj(graph);
