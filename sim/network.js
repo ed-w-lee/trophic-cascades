@@ -38,7 +38,8 @@ function autoCalcXY(graph, w, h) {
         a = svg_h;
         b = svg_w;
     }
-    let x_tmp = d3.scaleLinear()
+    let x_tmp = d3.scalePow()
+        .exponent(2/3)
         .domain([0, maxlvl])
         .range([0.15 * a, .85 * a]);
     for (let [nodeid, node] of graph.nodes) {
@@ -132,9 +133,9 @@ function getProgAlong(path, progress) {
 function getSize(mass, isUp) {
     let initR = Math.log2(Math.abs(mass.mass)) + 10;
     if (isUp) {
-        initR *= (200 - mass.prog) / 200;
+        initR *= (200 - mass.prog) / 100;
     } else {
-        initR *= (mass.prog + 100) / 100;
+        initR *= (mass.prog + 100) / 200;
     }
     return initR;
 }
@@ -170,15 +171,26 @@ function render(graph, positions) {
     ncap = d3.selectAll('#nodes > g > circle.cap')
         .data(nodes)
         .transition()
-        .attr('r', (d, i) => 4 * Math.sqrt(d.cap) / (maxlvl))
+        .attr('r', (d, i) => 6 * Math.sqrt(d.cap) / (maxlvl))
         .attr('fill', 'transparent')
         .attr('stroke', 'darkred')
         .attr('stroke-width', 5);
     npop = d3.selectAll('#nodes > g > circle.pop')
         .data(nodes)
         .transition()
-        .attr('r', (d, i) => 4 * Math.sqrt(d.pop) / (maxlvl))
+        .attr('r', (d, i) => 6 * Math.sqrt(d.cap) / (maxlvl) * (d.pop / d.cap))
         .attr('fill', 'darkred');
+    let getLine = function(d) {
+        r = 4 * Math.sqrt(d.cap) / (maxlvl) * (d.pop / d.cap);
+        k = 0.8;
+        if (Math.abs(d.pop - d.cap/2) < 10) {
+            return [0,0,0,0]
+        } else if (d.pop > d.cap/2) {
+            return [0, -k*r, 0, k*r];
+        } else {
+            return [0, k*r, 0, -k*r]
+        }
+    }
     nclick = d3.selectAll('#nodes > g > circle.click')
         .data(nodes)
         .on('click', (d) => {
@@ -186,11 +198,8 @@ function render(graph, positions) {
             selectedNode = d.id;
             render(graph, positions);
         })
-        .on('drag', (d) => {
-
-        })
         .transition()
-        .attr('r', (d, i) => 4 * Math.sqrt(d.cap) / (maxlvl) + 20)
+        .attr('r', (d, i) => 6 * Math.sqrt(d.cap) / (maxlvl) + 20)
 
     let links = graph.links;
     let lSelect = d3.select('#links')
@@ -288,7 +297,19 @@ function render(graph, positions) {
                 posY = positions[1].get(d.id) - 10;
             return 'translate(' + posX + ',' + posY + ')';
         })
-        .text((d) => d.name)
+        .text((d) => {
+            let ind;
+            console.log('HELLO');
+            console.log(d.pop, d.cap);
+            if (Math.abs(d.pop - d.cap/2) < 3) {
+                ind = "";
+            } else if (d.pop > d.cap/2) {
+                ind = "(↑)";
+            } else {
+                ind = "(↓)";
+            }
+            return d.name + ind;
+        })
         .attr('class', 'node_name');
 
 }

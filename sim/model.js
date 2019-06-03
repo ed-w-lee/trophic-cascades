@@ -179,7 +179,7 @@ class Graph {
             // convert proportional populations to actual populations
             for (let node of this.nodes.values()) {
                 node.pop = Math.round(100 * node.pop / minpop); 
-                node.cap = node.pop * 3;
+                node.cap = node.pop * 2;
             }
         }
     }
