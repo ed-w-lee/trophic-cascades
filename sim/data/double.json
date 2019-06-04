@@ -2,11 +2,11 @@
     "nodes": [
         {
             "id": 0,
-            "name": "plant"
+            "name": "urchin"
         },
         {
             "id": 1,
-            "name": "urchin"
+            "name": "sea otter"
         }    
     ],
     "links": [
@@ -19,6 +19,7 @@
     "params": {
         "udWeights": [
             1.0, 1.0
-        ]
+        ],
+        "mult": 0.25
     }
 }

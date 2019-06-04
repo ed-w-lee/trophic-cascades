@@ -1,0 +1,139 @@
+{
+    "nodes": [
+        {
+            "id": 0,
+            "name": "phytop"
+        },
+        {
+            "id": 10,
+            "name": "krill"
+        },
+        {
+            "id": 11,
+            "name": "zoop"
+        },
+        {
+            "id": 12,
+            "name": "copepods"
+        },
+        {
+            "id": 20,
+            "name": "forage fish"
+        },
+        {
+            "id": 21,
+            "name": "anchovies"
+        },
+        {
+            "id": 30,
+            "name": "whales"
+        },
+        {
+            "id": 31,
+            "name": "seals"
+        },
+        {
+            "id": 32,
+            "name": "large fish"
+        },
+        {
+            "id": 40,
+            "name": "sharks"
+        }
+    ],
+    "links": [
+        {
+            "src": 0,
+            "dst": 11,
+            "count": 1
+        },
+        {
+            "src": 0,
+            "dst": 10,
+            "count": 1
+        },
+        {
+            "src": 0,
+            "dst": 12,
+            "count": 1
+        },
+        {
+            "src": 11,
+            "dst": 21,
+            "count": 4
+        },
+        {
+            "src": 0,
+            "dst": 21,
+            "count": 1
+        },
+        {
+            "src": 10,
+            "dst": 20,
+            "count": 1
+        },
+        {
+            "src": 11,
+            "dst": 20,
+            "count": 2
+        },
+        {
+            "src": 12,
+            "dst": 20,
+            "count": 1
+        },
+        {
+            "src": 0,
+            "dst": 20,
+            "count": 1
+        },
+        {
+            "src": 20,
+            "dst": 30,
+            "count": 1
+        },
+        {
+            "src": 20,
+            "dst": 31,
+            "count": 1
+        },
+        {
+            "src": 10,
+            "dst": 30,
+            "count": 1
+        },
+        {
+            "src": 11,
+            "dst": 30,
+            "count": 1
+        },
+        {
+            "src": 12,
+            "dst": 32,
+            "count": 1
+        },
+        {
+            "src": 20,
+            "dst": 32,
+            "count": 1
+        },
+        {
+            "src": 32,
+            "dst": 40,
+            "count": 1
+        },
+        {
+            "src": 21,
+            "dst": 40,
+            "count": 1
+        },
+        {
+            "src": 31,
+            "dst": 40,
+            "count": 1
+        }
+    ],
+    "params": {
+        "mult": 0.75
+    }
+}

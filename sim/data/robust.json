@@ -2,72 +2,72 @@
     "nodes": [
         {
             "id": 0,
-            "name": "plant"
+            "name": "space"
         },
         {
             "id": 1,
-            "name": "urchin"
+            "name": "corals"
         },
         {
             "id": 2,
-            "name": "abalone"
-        },
-        {
-            "id": 5,
-            "name": "limpet"
+            "name": "algae"
         },
         {
             "id": 3,
-            "name": "otter"
-        },
-        {
-            "id": 6,
-            "name": "sea star"
+            "name": "parrotfish"
         },
         {
             "id": 4,
-            "name": "orca"
+            "name": "fish2"
+        },
+        {
+            "id": 5,
+            "name": "fish3"
+        },
+        {
+            "id": 6,
+            "name": "humans"
         }
     ],
     "links": [
         {
             "src": 0,
             "dst": 1,
-            "count": 2
-        },
-        {
-            "src": 0,
-            "dst": 5,
             "count": 1
         },
         {
             "src": 0,
             "dst": 2,
-            "count": 2
-        },
-        {
-            "src": 1,
-            "dst": 6,
-            "count": 1
+            "count": 3
         },
         {
             "src": 2,
-            "dst": 6,
-            "count": 1
-        },
-        {
-            "src": 1,
             "dst": 3,
             "count": 1
         },
         {
             "src": 2,
-            "dst": 3,
+            "dst": 4,
+            "count": 1
+        },
+        {
+            "src": 2,
+            "dst": 5,
             "count": 1
         },
         {
             "src": 3,
-            "dst": 4,
+            "dst": 6,
+            "count": 1
+        },
+        {
+            "src": 4,
+            "dst": 6,
+            "count": 1
+        },
+        {
+            "src": 5,
+            "dst": 6,
             "count": 1
         }
     ]

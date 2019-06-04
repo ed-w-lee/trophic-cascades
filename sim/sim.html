@@ -14,7 +14,9 @@
         <!-- <div id="graph-text"></div> -->
         <button id="play-btn">play</button>
         <button id="reset-btn">reset</button>
-        <button id="perturb-btn">perturb</button>
+        <br/>
+        <button id="add-btn">add 25kg</button>
+        <button id="remove-btn">remove 25kg</button>
         <button id="extinct-btn">eradicate! >:o</button>
         <div id="svg-hold">
             <svg id="diag" viewBox="0 0 600 600">
@@ -26,9 +28,6 @@
                         <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
                         <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
                     </filter>
-                    <marker id="arrow" viewBox="0 -5 10 10" refX="5" refY="0" markerWidth="4" markerHeight="4" orient="auto">
-                        <path d="M0,-5L10,0L05" class="arrowHead"></path>
-                    </marker>
                 </defs>
             </svg>
         </div>

@@ -1,5 +1,5 @@
 class Graph {
-    constructor(nodes, links, mult=0.5, prog=10, pert=10, pnWeights=[1.0,1.0], udWeights=[0.6,0.6]) {
+    constructor(nodes, links, mult=0.3333, prog=7, pert=25, pnWeights=[1.0,1.0], udWeights=[0.6,0.6]) {
         this.mult = mult; // trophic efficiency
         this.prog = prog; // progress of mass movements
         this.pert = -pert; // initial perturbation amount

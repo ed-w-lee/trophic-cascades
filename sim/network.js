@@ -10,12 +10,12 @@ function autoCalcXY(graph, w, h) {
     let lvlidx = new Map();
     for (let node of graph.nodes.values()) {
         maxlvl = Math.max(node.lvl, maxlvl);
-        if (!lvlcounts.has(node.lvl)) {
-            lvlcounts.set(node.lvl, 0);
-            lvlidx.set(node.id, 0);
+        let lvlrnd = Math.round(node.lvl * 2);
+        if (!lvlcounts.has(lvlrnd)) {
+            lvlcounts.set(lvlrnd, 0);
         }
-        let cnt = lvlcounts.get(node.lvl);
-        lvlcounts.set(node.lvl, cnt + 1);
+        let cnt = lvlcounts.get(lvlrnd);
+        lvlcounts.set(lvlrnd, cnt + 1);
         lvlidx.set(node.id, cnt);
     }
     let x = new Map(),
@@ -31,16 +31,17 @@ function autoCalcXY(graph, w, h) {
     let x_tmp;
     if (maxlvl == 0) {
         x_tmp = (lvl) => a/2;
-    } else {
+    } else { // 1/2 -> 2/3
         x_tmp = d3.scalePow()
-            .exponent(2 / 3)
+            .exponent(graph.mult ** .5)
             .domain([0, maxlvl])
-            .range([0.15 * a, .85 * a]);
+            .range([0.05 * a, .95 * a]);
     }
     for (let [nodeid, node] of graph.nodes) {
         x.set(nodeid, x_tmp(node.lvl));
+        let lvlrnd = Math.round(node.lvl * 2);
         node_lvlidx = lvlidx.get(nodeid);
-        node_lvlcnt = lvlcounts.get(node.lvl);
+        node_lvlcnt = lvlcounts.get(lvlrnd);
         let y_val = (node_lvlidx + 1) * b / (node_lvlcnt + 1);
         y.set(nodeid, y_val)
     }
@@ -58,7 +59,7 @@ function autoCalcXY(graph, w, h) {
 function layout(graph) {
     let svg = d3.select('svg')
         .attr('width', '100%')
-        .attr('height', '400px');
+        .attr('height', '440px');
     svg.append('g')
         .attr('id', 'links');
     svg.append('g')
@@ -81,7 +82,11 @@ function layout(graph) {
             d3.select('#play-btn').text("pause");
         }
     });
-    d3.select("#perturb-btn").on('click', () => {
+    d3.select("#add-btn").on('click', () => {
+        graph.perturb(selectedNode, -graph.pert, setExtinct = true, ignoreExtinct = false);
+        render(graph, positions);
+    });
+    d3.select("#remove-btn").on('click', () => {
         graph.perturb(selectedNode, undefined, setExtinct = true, ignoreExtinct = true);
         render(graph, positions);
     });
@@ -95,7 +100,7 @@ function layout(graph) {
 
 // should return needed arcs for given link
 function arcPath(link, positions, idx, lineGen) {
-    let dist = 100;
+    let dist = 30;
     let x1 = positions[0].get(link.src),
         y1 = positions[1].get(link.src),
         x2 = positions[0].get(link.dst),
@@ -125,15 +130,18 @@ function getProgAlong(path, progress) {
     return "translate(" + p.x + ',' + p.y + ")";
 }
 
-function getSize(mass, isUp) {
-    let initR = Math.log2(Math.abs(mass.mass)) + 10;
+function getSize(graph, mass, isUp) {
+    let initR = Math.sqrt(Math.abs(mass.mass));
+    let fact = 1/graph.mult;
     if (isUp) {
-        initR *= (200 - mass.prog) / 100;
+        initR *= Math.sqrt(fact) * ((fact-1)/100 * (100-mass.prog) + 1);
     } else {
-        initR *= (mass.prog + 100) / 200;
+        initR *= ((fact-1)/100 * mass.prog + 1);
     }
+    initR += 5;
     return initR;
 }
+
 
 function render(graph, positions) {
     let nodes = Array.from(graph.nodes.values());
@@ -163,17 +171,20 @@ function render(graph, positions) {
     for (let n of nodes) {
         maxlvl = Math.max(maxlvl, n.lvl);
     }
+    let getR = function(graph, d) {
+        return (graph.mult)**.5 * 12 * Math.sqrt(d.cap) / (maxlvl + 1)
+    }
     ncap = d3.selectAll('#nodes > g > circle.cap')
         .data(nodes)
         .transition()
-        .attr('r', (d, i) => 8 * Math.sqrt(d.cap) / (maxlvl+1))
+        .attr('r', (d, i) => getR(graph, d))
         .attr('fill', 'transparent')
         .attr('stroke', 'darkred')
         .attr('stroke-width', 5);
     npop = d3.selectAll('#nodes > g > circle.pop')
         .data(nodes)
         .transition()
-        .attr('r', (d, i) => 8 * Math.sqrt(d.cap) / (maxlvl+1) * (d.pop / d.cap))
+        .attr('r', (d, i) => getR(graph, d) * (d.pop / d.cap))
         .attr('fill', 'darkred');
     nclick = d3.selectAll('#nodes > g > circle.click')
         .data(nodes)
@@ -183,7 +194,7 @@ function render(graph, positions) {
             render(graph, positions);
         })
         .transition()
-        .attr('r', (d, i) => 8 * Math.sqrt(d.cap) / (maxlvl+1) + 20)
+        .attr('r', (d, i) => getR(graph, d) + 20)
 
     let links = graph.links;
     let lSelect = d3.select('#links')
@@ -239,7 +250,7 @@ function render(graph, positions) {
             .attr('class', 'tomass');
     lto.exit().remove();
     lto.merge(ltoEnter)
-        .attr('r', (d) => getSize(d[2], true))
+        .attr('r', (d) => getSize(graph, d[2], true))
         .attr('fill', (d) => d[2].mass > 0 ? "green" : "red")
         .attr('transform', (d,i,g) => {
             // lmao; hella sketch :p
@@ -261,7 +272,7 @@ function render(graph, positions) {
             .attr('class', 'frommass');
     lfrom.exit().remove();
     lfrom.merge(lfromEnter)
-        .attr('r', (d) => getSize(d[2], false))
+        .attr('r', (d) => getSize(graph, d[2], false))
         .attr('fill', (d) => d[2].mass > 0 ? "green" : "red")
         .attr('transform', (d,i,g) => {
             // lmao; hella sketch :p
