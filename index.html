@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 
     <title>Trophic Cascades</title>
-    <meta name="description" content="interactive introduction to ecological networks">
+    <meta name="description" content="an interactive introduction to ecological networks">
 
     <link rel="icon" text="image/png" href="favicon.png">
     <link rel="stylesheet" type="text/css" href="index.css">
@@ -14,41 +14,222 @@
 <body>
     <header>
         <h1>Trophic Cascades</h1>
+        <p class="subtitle">An interactive introduction to ecological networks</p>
+        <p class="author">Edward Lee, June 2019</p>
     </header>
 
     <section>
-        <h2>Overview</h2>
+        <h2>Introduction</h2>
         <p>
-            What is this madness.
-            This is an overview of trophic cascades. Blah blah blah.
+            When we eat fish, what impact does that have on the environment?
+        </p>
+        <p>
+            With other meats like beef and pork, we tend to focus on things like the greenhouse gas emissions from cow
+            farts and the added nutrients in their surroundings due to animal waste, which are all really important.
+        </p>
+        <p>
+            But unlike cows, pigs, and chickens, fish aren't all raised in ranches.
+            Around 50% of the world's fish supply comes from fisheries taking these fish out of the oceans and the seas for us to consume.
+            In the ocean, fish interact with other species, like whales, and sharks, and other fish.
+            As such, there's an additional factor we need to think about:
+            How does the removal of fish affect the ecosystem it was taken from?
+        </p>
+        <p>
+            As mentioned before, fish might interact with many different species, and with all these connections it's hard to know where to begin.
+            One way we can attempt to start, and what we're going to do here, is think about the "who-eats-who" relationships.
+            And to do so, we're going to construct an <b>ecological network</b>.
         </p>
     </section>
 
     <section>
-        <h2>Single</h2>
+        <h2>A single step</h2>
         <iframe src="sim/sim.html?mode=single" scrolling="no" class="demo"></iframe>
+        <p>
+            As seen here, in our ecological network, each species is represented as a point in space, a <b>node</b>.
+            In this case, we've got sea urchins represented.
+        </p>
+        <p>
+            This node represents how many species there are with the solid red inner circle, and how many there can be with the outer circle.
+        </p>
+        <p>
+            Try adding and removing sea urchins from our node above. (Don't worry too much about the 'play' and 'reset' buttons.)
+        </p>
     </section>
     <section>
-        <h2>Double</h2>
+        <h2>A link is born</h2>
+        <p>
+            So we can add or remove sea urchins, but currently that's not really super interesting.
+        </p>
+        <p>
+            Fortunately, there are some species that interact with sea urchins, like sea otters which eat urchins.
+            Let's add a new node for sea otters as well as a <b>link</b> connecting the two species to represent their interaction.
+        </p>
         <iframe src="sim/sim.html?mode=double" scrolling="no" class="demo"></iframe>
+        <p>
+            Now try adding and removing mass from the urchin population and see what happens. (Press 'play' to see the interaction in action!)
+        </p>
+        <p>
+            Here are a few things to note:
+            <ul>
+                <li>
+                    The <b>impacts</b> that go across the link change sizes as they move from urchin to otter and back for the same reason.
+                </li>
+                <li>
+                    Red impacts <b class="red">decrease</b> the population, and green impacts <b class="green">increase</b> them.
+                </li>
+                <li>
+                    When the sea urchin population <b class="green">increases</b>, the sea otter population changes with it since more urchins can support more otters.
+                </li>
+                <li>
+                    On the other hand, when the otter population <b class="green">increases</b>, urchin population <b class="red">decreases</b> as more otters can eat more urchins.
+                </li>
+                <li>
+                    Since each sea otter needs to eat multiple sea urchins, the possible size for the sea otter node is <i>smaller</i> than that of the urchin node.
+                </li>
+                <li>
+                    Changes in population go back and forth between the sea urchins and sea otters.
+                </li>
+
+            </ul>
+        </p>
     </section>
     <section>
-    <section>
-        <h2>Chain</h2>
+        <h2>It all comes tumbling down</h2>
+        <p>
+            With nodes and links, we can begin to understand how removing fish affects the ecosystem.
+        </p>
+        <p>
+            Let's add yet another node to the current network, this time what urchin eat: kelp.
+        </p>
         <iframe src="sim/sim.html?mode=chain" scrolling="no" class="demo"></iframe>
+        <p>
+            Try adding or removing mass from the kelp population, and see how the urchin and sea otter communities change. Not much, right?
+            Now try adding or removing mass from the sea otter population. Note how much larger the change is here.
+        </p>
+        <p>
+            Why did populations react differently when we removed the same amount from both populations?
+        </p>
+        <p>
+            You likely guessed it, but it's because otters eat many urchins and urchins eat many kelp.
+            So when some otters get removed, that many more urchins can eat that much more kelp.
+            And in kelp forests, this can mean the difference between a lush kelp forest filled with all sorts of fish or an urchin barren of nothing but sea urchins.
+        </p>
+        <p>
+            This amplification of effects, from otter to urchin to kelp, is what's known as a <b>trophic cascade</b>.
+            Changes in the population high up in a network can have cascading effects that ripple down to the bottom, ultimately changing the environment and the species composition of the ecosystem.
+            These cascades are often really undesirable because they can cause catastrophic changes to an ecosystem and alter it until it's unrecognizable without changing too much.
+        </p>
     </section>
     <section>
-        <h2>Diverse</h2>
+        <h2>The <i>Pisaster</i> Disaster</h2>
+        <p>
+            Other than changing kelp forests, what else can trophic cascades have an effect on?
+            In this case, we'll see how changing populations high up in a network can change the diversity of the ecosystem.
+        </p>
+        <p>
+            In the tide pools, organisms like mussels, barnacles, and limpets that attach themselves to the rocks compete for space against one another.
+            Mussels can often beat out its competitors for space on the rocks, but are also the primary food item for the sea star <i>Pisaster ochraceus</i>.
+        </p>
+        <p>
+            In our network currently, mussels take up more space than the other species. 
+            Can you make the species composition more balanced by <b>only adjusting sea star populations?</b>
+        </p>
         <iframe src="sim/sim.html?mode=diverse" scrolling="no" class="demo"></iframe>
+        <p>
+            As you might have done yourself, by increasing sea star populations, mussels get eaten more often, allowing more space for the other 3 species to grow.
+            On the other hand, eradicating sea stars would cause mussel populations to shoot up and prevent other species from taking hold.
+        </p>
+        <p>
+            This is a huge problem facing coastal ecosystems across North America due to <i>sea star wasting disease</i>, which has decimated sea star populations in recent years.
+            This severe decline in sea star populations thus not only means loss of sea stars, but likely also severe reductions of other organisms in the tide-pool that are outcompeted by mussels.
+        </p>
     </section>
     <section>
-        <h2>Robust</h2>
+        <h2>Resisting change</h2>
+        <p>
+            So we've seen the potential for trophic cascades.
+            But do all networks necessarily have cascades?
+            And is there any way we can take species higher up in a network without unintentionally triggering one?
+        </p>
+        <p>
+            We can look to coral reefs as an indication.
+            In coral reefs, there is a constant battle between coral and algae.
+            Herbivorous fish like parrotfish and rabbitfish can help corals by consuming algae before it covers the surface.
+            However, we humans also eat a lot of reef fish.
+        </p>
+        <p>
+            Try exterminating different species and see how much the coral population changes.
+        </p>
         <iframe src="sim/sim.html?mode=robust" scrolling="no" class="demo"></iframe>
+        <p>
+            If we exterminate just a single species of fish, we can see that the coral population doesn't change too much.
+            It might be hard to track, but this may be due to the other 2 untouched fish species, which are able to fill in for the exterminated species.
+        </p>
+        <p>
+            But, as we continue to remove more fish species, note that the remaining fish species are less and less capable of filling in, with coral populations getting smaller and smaller.
+        </p>
+        <p>
+            On the other hand, changing human demand immediately has a cascading effect.
+        </p>
+        <p>
+            The difference between these fish species and humans is that the fish, being more diverse, have more opportunities for picking up the slack of others.
+            If one species goes extinct, the others can still keep algae populations low.
+        </p>
+    </section>
+    <section>
+        <h2>Connecting it all together</h2>
+        <p>
+            So that's it.
+            Not all species removed have equal impact.
+            Consuming fish has lower impact on the ecosystem when these fish are:
+            <ul>
+                <li>
+                    located lower in the food web,
+                </li>
+                <li>
+                    have similar species that serve similar functions,
+                </li>
+                <li>
+                    and aren't the sole connection to another species
+                </li>
+            </ul>
+        </p>
+        <p>
+            Of course, there are other factors we ignored here.
+            A lot, actually.
+            Networks can change based on behavior or population dynamics.
+            Different fish take different resources to fish or raise.
+            Fishing by dragging nets at the bottom of the seafloor can damage fish's homes and their ability to find mates.
+            We're taking small fish by the boatload, which could have just as much impact as fishing for larger predators.
+        </p>
+        <p>
+            But as an oversimplified rule of thumb, to have the least impact on ecosystems, and to prevent unwanted trophic cascades, <b>eat small, eat low</b>.
+        </p>
     </section>
     <section>
         <h2>Extra</h2>
         <iframe src="sim/sim.html?mode=extra" scrolling="no" class="demo"></iframe>
     </section>
+
+    <footer>
+        <h2><span class="tt">&lt;/article&gt;</span></h2>
+        <div id="ftr-thanks">
+            <p>
+                Big thanks to <a href="https://crowderlab.stanford.edu/">Larry Crowder</a> for organizing the Marine Conservation Biology course. This article likely isn't 100% correct or 100% factual, but Larry, the speakers he invited each week, and the rest of the Hopkins community are responsible for all the parts
+                that are.
+            </p>
+            <p>
+                Credits to <a href="https://ncase.me">Nicky Case</a> and her many amazing explorable explanations for inspiring me to try and make my own. I also took inspiration from her source code, which really really helped.
+            </p>
+            <div><b>Disclaimers:</b></div>
+            <div class="disclaimer">
+                Network model was basically made up to try to get to an end goal, not based on any sort of sound science.
+            </div>
+            <div class="disclaimer">
+                Food webs are not reliable at all. I just threw together random species and connected them to make a pretty graph.
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>

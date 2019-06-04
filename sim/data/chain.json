@@ -11,10 +11,6 @@
         {
             "id": 2,
             "name": "sea otter"
-        },
-        {
-            "id": 3,
-            "name": "orca"
         }
     ],
     "links": [
@@ -27,14 +23,9 @@
             "src": 1,
             "dst": 2,
             "count": 1
-        },
-        {
-            "src": 2,
-            "dst": 3,
-            "count": 1
-        }
+        }    
     ],
     "params": {
-        "mult": 0.333
+        "mult": 0.25
     }
 }

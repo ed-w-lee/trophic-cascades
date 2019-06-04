@@ -18,11 +18,15 @@
         },
         {
             "id": 4,
-            "name": "fish2"
+            "name": "damselfish"
         },
         {
             "id": 5,
-            "name": "fish3"
+            "name": "rabbitfish"
+        },
+        {
+            "id": 7,
+            "name": "surgeonfish"
         },
         {
             "id": 6,
@@ -38,7 +42,7 @@
         {
             "src": 0,
             "dst": 2,
-            "count": 3
+            "count": 4
         },
         {
             "src": 2,
@@ -56,12 +60,22 @@
             "count": 1
         },
         {
+            "src": 2,
+            "dst": 7,
+            "count": 1
+        },
+        {
             "src": 3,
             "dst": 6,
             "count": 1
         },
         {
             "src": 4,
+            "dst": 6,
+            "count": 1
+        },
+        {
+            "src": 7,
             "dst": 6,
             "count": 1
         },
