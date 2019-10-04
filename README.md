@@ -1,7 +1,7 @@
 # Trophic Cascades
 Small website explaining trophic cascades (hopefully...)
 
-Go play around with it over [here]{https://ed-w-lee.github.io/trophic-cascades/}
+Go play around with it over [here](https://ed-w-lee.github.io/trophic-cascades/)
 
 ## Disclaimer
 This was done in 1 tea-filled night. So, not the greatest of code, nor the best of models.
